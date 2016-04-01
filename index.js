@@ -1,18 +1,18 @@
 var checkstyle = require('jshint-checkstyle-file-reporter'),
-    path = require('path');
+  path = require('path');
 
-process.env.JSHINT_CHECKSTYLE_FILE = 'htmlhint-checkstyle.xml';
-
-module.exports = function(file) {
-    return checkstyle.reporter(file.htmlhint.messages.map(function(errMsg) {
-        return {
-            file: path.relative(file.cwd, errMsg.file),
-            error: {
-                character: errMsg.error.col,
-                code: errMsg.error.rule.id,
-                line: errMsg.error.line,
-                reason: errMsg.error.message
-            }
-        };
-    }));
+module.exports = function (file) {
+  process.env.JSHINT_CHECKSTYLE_FILE = process.env.HTMLHINT_CHECKSTYLE_FILE || 'htmlhint-checkstyle.xml';
+  return checkstyle.reporter(file.htmlhint.messages.map(function (errMsg) {
+    return {
+      file: path.relative(file.cwd, errMsg.file),
+      error: {
+        severity: errMsg.error.type,
+        character: errMsg.error.col,
+        code: errMsg.error.rule.id,
+        line: errMsg.error.line,
+        reason: errMsg.error.message
+      }
+    };
+  }));
 };

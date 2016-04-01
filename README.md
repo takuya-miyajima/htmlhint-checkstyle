@@ -18,8 +18,12 @@ $ npm install --save-dev htmlhint-checkstyle
 ```javascript
 var gulp = require('gulp');
 
+// You can specify file name optionally,
+// default file name is 'htmlhint-checkstyle.xml'
+process.env.HTMLHINT_CHECKSTYLE_FILE = 'anyFileName.xml'
+
 gulp.task('htmlhint', function() {
-  var htmlhint = require("gulp-htmlhint");
+  var htmlhint = require('gulp-htmlhint');
   gulp.src(['index.html'])
     .pipe(htmlhint('.htmlhintrc'))
     .pipe(htmlhint.reporter('htmlhint-checkstyle'))
